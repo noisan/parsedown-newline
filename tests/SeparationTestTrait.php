@@ -47,6 +47,17 @@ trait SeparationTestTrait
         $this->assertEquals($expected, $this->parsedown->line($markdown));
     }
 
+    /** @test */
+    public function 全角英字分かち書きモード_改行前後のどちらか一方でも全角英字なら常に改行を残す()
+    {
+        $markdown = '全角ＡＢＣ' . "\n" . '全角' . "\n" . 'ＡＢＣ' . "\n" . '全角' . "\n" . '１２３！' . "\n" . '半角ABC' . "\n" . "全角";
+        $expected = '全角ＡＢＣ' . "\n" . '全角' . "\n" . 'ＡＢＣ' . "\n" . '全角' . ""   . '１２３！' . ""   . '半角ABC' . ""   . "全角";
+
+        $this->parsedown->setMultiByteAlphaSeparated(true);
+
+        $this->assertEquals($expected, $this->parsedown->line($markdown));
+    }
+
     public function setUp()
     {
         $this->parsedown = $this->initParsedown();
