@@ -99,6 +99,16 @@ trait JapaneseNewlineTrait
         return $this;
     }
 
+    public function setSingleByteNumericSeparated($bool)
+    {
+        if ($bool) {
+            $this->japanese_newline_Separators['single_numeric'] = 'ctype_digit';
+        } else {
+            unset($this->japanese_newline_Separators['single_numeric']);
+        }
+        return $this;
+    }
+
     protected function isJapaneseNewlineAlphaNumeric($char)
     {
         return preg_match($this->getJapaneseNewlineAlphaNumericPattern(), $char);

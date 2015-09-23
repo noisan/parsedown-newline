@@ -25,6 +25,17 @@ trait SeparationTestTrait
         $this->assertEquals($expected, $this->parsedown->line($markdown));
     }
 
+    /** @test */
+    public function 半角数字分かち書きモード_改行前後のどちらか一方でも半角数字なら常に改行を残す()
+    {
+        $markdown = '半角123' . "\n" . '全角' . "\n" . '123' . "\n" . '全角' . "\n" . 'ABC';
+        $expected = '半角123' . "\n" . '全角' . "\n" . '123' . "\n" . '全角' . ""   . 'ABC';
+
+        $this->parsedown->setSingleByteNumericSeparated(true);
+
+        $this->assertEquals($expected, $this->parsedown->line($markdown));
+    }
+
     public function setUp()
     {
         $this->parsedown = $this->initParsedown();
