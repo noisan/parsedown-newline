@@ -58,6 +58,17 @@ trait SeparationTestTrait
         $this->assertEquals($expected, $this->parsedown->line($markdown));
     }
 
+    /** @test */
+    public function 全角数字分かち書きモード_改行前後のどちらか一方でも全角数字なら常に改行を残す()
+    {
+        $markdown = '全角１２３' . "\n" . '全角' . "\n" . '１２３' . "\n" . '全角' . "\n" . 'ＡＢＣ！' . "\n" . '半角123' . "\n" . "全角";
+        $expected = '全角１２３' . "\n" . '全角' . "\n" . '１２３' . "\n" . '全角' . ""   . 'ＡＢＣ！' . ""   . '半角123' . ""   . "全角";
+
+        $this->parsedown->setMultiByteNumericSeparated(true);
+
+        $this->assertEquals($expected, $this->parsedown->line($markdown));
+    }
+
     public function setUp()
     {
         $this->parsedown = $this->initParsedown();

@@ -120,6 +120,14 @@ trait JapaneseNewlineTrait
         return $this;
     }
 
+    public function setMultiByteNumericSeparated($bool)
+    {
+        $this->setJapaneseNewlineSeparator('multi_numeric', ($bool) ? function ($char) {
+            return preg_match('/[０-９]\z/Au', $char);
+        } : null);
+        return $this;
+    }
+
     protected function isJapaneseNewlineAlphaNumeric($char)
     {
         return preg_match($this->getJapaneseNewlineAlphaNumericPattern(), $char);
