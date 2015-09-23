@@ -89,6 +89,16 @@ trait JapaneseNewlineTrait
         return $this;
     }
 
+    public function setSingleByteAlphaSeparated($bool)
+    {
+        if ($bool) {
+            $this->japanese_newline_Separators['single_alpha'] = 'ctype_alpha';
+        } else {
+            unset($this->japanese_newline_Separators['single_alpha']);
+        }
+        return $this;
+    }
+
     protected function isJapaneseNewlineAlphaNumeric($char)
     {
         return preg_match($this->getJapaneseNewlineAlphaNumericPattern(), $char);
