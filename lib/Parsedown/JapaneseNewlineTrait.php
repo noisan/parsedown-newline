@@ -16,6 +16,7 @@ trait JapaneseNewlineTrait
      *
      *   1. 改行の前後両方が半角文字の場合
      *   2. 改行の前後両方が英数字の場合(全角・半角を問わない)
+     *   3. その他、指定した文字種に隣接する場合
      *
      * 数字や単語が繋がると意味が変わってしまう可能性もあるので
      * 分かち書きが必要な箇所では改行を削除しない。
@@ -59,7 +60,33 @@ trait JapaneseNewlineTrait
             return true;
         }
 
+        if ($this->isJapaneseNewlineSepapator($prev) or $this->isJapaneseNewlineSepapator($next)) {
+            // 前後どちらか一方でも、分かち書き指定の文字種
+            return true;
+        }
+
         return false;
+    }
+
+    protected function isJapaneseNewlineSepapator($char)
+    {
+        foreach ($this->japanese_newline_Separators as $separator) {
+            if ($separator($char)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public function setSingleByteCharsSeparated($bool)
+    {
+        if ($bool) {
+            $this->japanese_newline_Separators['single_all'] = function ($char) { return (strlen($char) <= 1); };
+        } else {
+            unset($this->japanese_newline_Separators['single_all']);
+        }
+        return $this;
     }
 
     protected function isJapaneseNewlineAlphaNumeric($char)
@@ -85,4 +112,6 @@ trait JapaneseNewlineTrait
      * その箇所では分かち書きを維持する必要がある。
      */
     protected $japanese_newline_AlphaNumericPattern = '/[0-9０-９\p{Latin}\p{Greek}\p{Cyrillic}]\z/Au';
+
+    protected $japanese_newline_Separators = array();
 }
