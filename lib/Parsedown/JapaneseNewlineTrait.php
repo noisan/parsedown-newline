@@ -79,43 +79,36 @@ trait JapaneseNewlineTrait
         return false;
     }
 
+    public function setJapaneseNewlineSeparator($key, $callback)
+    {
+        if ($callback) {
+            $this->japanese_newline_Separators[$key] = $callback;
+        } else {
+            unset($this->japanese_newline_Separators[$key]);
+        }
+    }
+
     public function setSingleByteCharsSeparated($bool)
     {
-        if ($bool) {
-            $this->japanese_newline_Separators['single_all'] = function ($char) { return (strlen($char) <= 1); };
-        } else {
-            unset($this->japanese_newline_Separators['single_all']);
-        }
+        $this->setJapaneseNewlineSeparator('single_all', ($bool) ? function ($char) { return (strlen($char) <= 1); } : null);
         return $this;
     }
 
     public function setSingleByteAlphaSeparated($bool)
     {
-        if ($bool) {
-            $this->japanese_newline_Separators['single_alpha'] = 'ctype_alpha';
-        } else {
-            unset($this->japanese_newline_Separators['single_alpha']);
-        }
+        $this->setJapaneseNewlineSeparator('single_alpha', ($bool) ? 'ctype_alpha' : null);
         return $this;
     }
 
     public function setSingleByteNumericSeparated($bool)
     {
-        if ($bool) {
-            $this->japanese_newline_Separators['single_numeric'] = 'ctype_digit';
-        } else {
-            unset($this->japanese_newline_Separators['single_numeric']);
-        }
+        $this->setJapaneseNewlineSeparator('single_numeric', ($bool) ? 'ctype_digit' : null);
         return $this;
     }
 
     public function setSingleByteSymbolSeparated($bool)
     {
-        if ($bool) {
-            $this->japanese_newline_Separators['single_symbol'] = 'ctype_punct';
-        } else {
-            unset($this->japanese_newline_Separators['single_symbol']);
-        }
+        $this->setJapaneseNewlineSeparator('single_symbol', ($bool) ? 'ctype_punct' : null);
         return $this;
     }
 
