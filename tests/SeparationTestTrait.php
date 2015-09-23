@@ -36,6 +36,17 @@ trait SeparationTestTrait
         $this->assertEquals($expected, $this->parsedown->line($markdown));
     }
 
+    /** @test */
+    public function 半角記号分かち書きモード_改行前後のどちらか一方でも半角記号なら常に改行を残す()
+    {
+        $markdown = '半角!?' . "\n" . '全角' . "\n" . '#$%' . "\n" . '全角' . "\n" . 'ABC';
+        $expected = '半角!?' . "\n" . '全角' . "\n" . '#$%' . "\n" . '全角' . ""   . 'ABC';
+
+        $this->parsedown->setSingleByteSymbolSeparated(true);
+
+        $this->assertEquals($expected, $this->parsedown->line($markdown));
+    }
+
     public function setUp()
     {
         $this->parsedown = $this->initParsedown();
