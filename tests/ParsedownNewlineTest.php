@@ -1,6 +1,7 @@
 <?php
 namespace Noi\Tests;
 
+use Noi\ParsedownNewline;
 use ParsedownTest;
 
 class ParsedownNewlineTest extends ParsedownTest
@@ -13,9 +14,4 @@ class ParsedownNewlineTest extends ParsedownTest
 
         return $Parsedown;
     }
-}
-
-class ParsedownNewline extends \Parsedown
-{
-    use \Noi\Parsedown\JapaneseNewlineTrait;
 }
