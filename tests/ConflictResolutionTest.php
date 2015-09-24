@@ -66,7 +66,7 @@ class ConflictResolutionTest_TestExtraImpl extends ParsedownExtra
     }
 }
 
-class ConflictResolutionTest extends ParsedownTest
+class ConflictResolutionTest_ParsedownTest extends ParsedownTest
 {
     use JapaneseNewlineTestTrait;
 
@@ -76,7 +76,7 @@ class ConflictResolutionTest extends ParsedownTest
     }
 }
 
-class ConflictResolutionExtraTest extends ParsedownExtraTest
+class ConflictResolutionTest_ParsedownExtraTest extends ParsedownExtraTest
 {
     use JapaneseNewlineTestTrait;
 
